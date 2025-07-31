@@ -174,8 +174,7 @@ apply_handler(Req, Path, #{mfargs := MFArgs, options := #{authorization := {Mod,
         true  -> apply_handler(Req, Path, MFArgs);
         false ->
             minirest:put_return(#{status => 401, message => <<"UNAUTHORIZED">>}),
-            cowboy_req:reply(401, #{<<"WWW-Authenticate">> => <<"Basic Realm=\"minirest-server\"">>},
-                             <<"UNAUTHORIZED">>, Req);
+            cowboy_req:reply(401, #{}, <<"UNAUTHORIZED">>, Req);
         {error, permission_deny, ResponseBody} ->
             minirest:put_return(ResponseBody#{status => 200}),
             cowboy_req:reply(200, #{}, jiffy:encode(ResponseBody), Req);
@@ -189,8 +188,7 @@ apply_handler(Req, Path, #{mfargs := MFArgs, options := #{authorization := AuthF
         true  -> apply_handler(Req, Path, MFArgs);
         false ->
             minirest:put_return(#{status => 401, message => <<"UNAUTHORIZED">>}),
-            cowboy_req:reply(401, #{<<"WWW-Authenticate">> => <<"Basic Realm=\"minirest-server\"">>},
-                             <<"UNAUTHORIZED">>, Req);
+            cowboy_req:reply(401, #{}, <<"UNAUTHORIZED">>, Req);
         {error, permission_deny, ResponseBody} ->
             minirest:put_return(ResponseBody#{status => 200}),
             cowboy_req:reply(200, #{}, jiffy:encode(ResponseBody), Req);
